@@ -1,6 +1,5 @@
 import type { IDoubleTokenRes } from '@/api/types/login'
 import type { CustomRequestOptions, IResponse } from '@/http/types'
-import { nextTick } from 'vue'
 import { useTokenStore } from '@/store/token'
 import { isDoubleTokenMode } from '@/utils'
 import { toLoginPage } from '@/utils/toLoginPage'
@@ -63,8 +62,7 @@ export function http<T>(options: CustomRequestOptions) {
               })
               // 将任务队列的所有任务重新请求
               taskQueue.forEach(task => task())
-            }
-            catch (refreshErr) {
+            } catch (refreshErr) {
               console.error('刷新 token 失败:', refreshErr)
               refreshing = false
               // 刷新 token 失败，跳转到登录页
@@ -82,8 +80,7 @@ export function http<T>(options: CustomRequestOptions) {
               setTimeout(() => {
                 toLoginPage()
               }, 2000)
-            }
-            finally {
+            } finally {
               // 不管刷新 token 成功与否，都清空任务队列
               taskQueue = []
             }
@@ -106,10 +103,10 @@ export function http<T>(options: CustomRequestOptions) {
 
         // 处理其他错误
         !options.hideErrorToast
-        && uni.showToast({
-          icon: 'none',
-          title: (res.data as any).msg || '请求错误',
-        })
+          && uni.showToast({
+            icon: 'none',
+            title: (res.data as any).msg || '请求错误',
+          })
         reject(res)
       },
       // 响应失败

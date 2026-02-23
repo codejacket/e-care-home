@@ -1,4 +1,3 @@
-import { ref } from 'vue'
 import { getEnvBaseUrl } from '@/utils/index'
 
 const VITE_UPLOAD_BASEURL = `${getEnvBaseUrl()}/upload`
@@ -62,8 +61,7 @@ export default function useUpload<T extends TfileType>(options: TOptions<T> = {}
           const jsonData = JSON.parse(res)
           // 检查是否包含data字段
           parsedData = jsonData.data || jsonData
-        }
-        catch (e) {
+        } catch (e) {
           // 如果解析失败，使用原始数据
           console.log('Response is not JSON, using raw data:', res)
         }
@@ -123,8 +121,7 @@ export default function useUpload<T extends TfileType>(options: TOptions<T> = {}
       // #ifndef MP-WEIXIN
       uni.chooseImage(chooseFileOptions)
       // #endif
-    }
-    else {
+    } else {
       uni.chooseFile({
         ...chooseFileOptions,
         type: 'all',
@@ -157,8 +154,7 @@ async function uploadFile({
       try {
         const data = uploadFileRes.data
         onSuccess(data)
-      }
-      catch (err) {
+      } catch (err) {
         onError(err)
       }
     },

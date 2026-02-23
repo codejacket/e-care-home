@@ -3,14 +3,7 @@ import type {
 } from '@/api/login'
 import type { IAuthLoginRes } from '@/api/types/login'
 import { defineStore } from 'pinia'
-import { computed, ref } from 'vue' // 修复：导入 computed
-import {
-  login as _login,
-  logout as _logout,
-  refreshToken as _refreshToken,
-  wxLogin as _wxLogin,
-  getWxCode,
-} from '@/api/login'
+import loginApi from '@/api/login'
 import { isDoubleTokenRes, isSingleTokenRes } from '@/api/types/login'
 import { isDoubleTokenMode } from '@/utils'
 import { useUserStore } from './user'
@@ -18,15 +11,15 @@ import { useUserStore } from './user'
 // 初始化状态
 const tokenInfoState = isDoubleTokenMode
   ? {
-      accessToken: '',
-      accessExpiresIn: 0,
-      refreshToken: '',
-      refreshExpiresIn: 0,
-    }
+    accessToken: '',
+    accessExpiresIn: 0,
+    refreshToken: '',
+    refreshExpiresIn: 0,
+  }
   : {
-      token: '',
-      expiresIn: 0,
-    }
+    token: '',
+    expiresIn: 0,
+  }
 
 export const useTokenStore = defineStore(
   'token',
@@ -58,8 +51,7 @@ export const useTokenStore = defineStore(
         // 单token模式
         const expireTime = now + val.expiresIn * 1000
         uni.setStorageSync('accessTokenExpireTime', expireTime)
-      }
-      else if (isDoubleTokenRes(val)) {
+      } else if (isDoubleTokenRes(val)) {
         // 双token模式
         const accessExpireTime = now + val.accessExpiresIn * 1000
         const refreshExpireTime = now + val.refreshExpiresIn * 1000
@@ -118,7 +110,7 @@ export const useTokenStore = defineStore(
      */
     const login = async (loginForm: ILoginForm) => {
       try {
-        const res = await _login(loginForm)
+        const res = await loginApi.login(loginForm)
         console.log('普通登录-res: ', res)
         await _postLogin(res)
         uni.showToast({
@@ -126,16 +118,14 @@ export const useTokenStore = defineStore(
           icon: 'success',
         })
         return res
-      }
-      catch (error) {
+      } catch (error) {
         console.error('登录失败:', error)
         uni.showToast({
           title: '登录失败，请重试',
           icon: 'error',
         })
         throw error
-      }
-      finally {
+      } finally {
         updateNowTime()
       }
     }
@@ -149,9 +139,9 @@ export const useTokenStore = defineStore(
     const wxLogin = async () => {
       try {
         // 获取微信小程序登录的code
-        const code = await getWxCode()
+        const code = await loginApi.getWxCode()
         console.log('微信登录-code: ', code)
-        const res = await _wxLogin(code)
+        const res = await loginApi.wxLogin(code)
         console.log('微信登录-res: ', res)
         await _postLogin(res)
         uni.showToast({
@@ -159,16 +149,14 @@ export const useTokenStore = defineStore(
           icon: 'success',
         })
         return res
-      }
-      catch (error) {
+      } catch (error) {
         console.error('微信登录失败:', error)
         uni.showToast({
           title: '微信登录失败，请重试',
           icon: 'error',
         })
         throw error
-      }
-      finally {
+      } finally {
         updateNowTime()
       }
     }
@@ -179,12 +167,10 @@ export const useTokenStore = defineStore(
     const logout = async () => {
       try {
         // TODO 实现自己的退出登录逻辑
-        await _logout()
-      }
-      catch (error) {
+        await loginApi.logout()
+      } catch (error) {
         console.error('退出登录失败:', error)
-      }
-      finally {
+      } finally {
         updateNowTime()
 
         // 无论成功失败，都需要清除本地token信息
@@ -216,16 +202,14 @@ export const useTokenStore = defineStore(
         }
 
         const refreshToken = tokenInfo.value.refreshToken
-        const res = await _refreshToken(refreshToken)
+        const res = await loginApi.refreshToken(refreshToken)
         console.log('刷新token-res: ', res)
         setTokenInfo(res)
         return res
-      }
-      catch (error) {
+      } catch (error) {
         console.error('刷新token失败:', error)
         throw error
-      }
-      finally {
+      } finally {
         updateNowTime()
       }
     }
@@ -244,8 +228,7 @@ export const useTokenStore = defineStore(
 
       if (!isDoubleTokenMode) {
         return isSingleTokenRes(tokenInfo.value) ? tokenInfo.value.token : ''
-      }
-      else {
+      } else {
         return isDoubleTokenRes(tokenInfo.value) ? tokenInfo.value.accessToken : ''
       }
     })
@@ -259,8 +242,7 @@ export const useTokenStore = defineStore(
       }
       if (isDoubleTokenMode) {
         return isDoubleTokenRes(tokenInfo.value) && !!tokenInfo.value.accessToken
-      }
-      else {
+      } else {
         return isSingleTokenRes(tokenInfo.value) && !!tokenInfo.value.token
       }
     })
@@ -284,8 +266,7 @@ export const useTokenStore = defineStore(
         try {
           await refreshToken()
           return getValidToken.value
-        }
-        catch (error) {
+        } catch (error) {
           console.error('尝试刷新token失败:', error)
           return ''
         }

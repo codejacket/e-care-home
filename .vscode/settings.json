@@ -69,28 +69,5 @@
     "pcss",
     "postcss"
   ],
-  "cSpell.words": [
-    "alova",
-    "Aplipay",
-    "attributify",
-    "chooseavatar",
-    "climblee",
-    "commitlint",
-    "dcloudio",
-    "iconfont",
-    "oxlint",
-    "qrcode",
-    "refresherrefresh",
-    "scrolltolower",
-    "tabbar",
-    "Toutiao",
-    "uniapp",
-    "unibest",
-    "unocss",
-    "uview",
-    "uvui",
-    "Wechat",
-    "WechatMiniprogram",
-    "Weixin"
-  ]
+  "cSpell.enable": false
 }

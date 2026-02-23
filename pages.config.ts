@@ -2,8 +2,8 @@ import { defineUniPages } from '@uni-helper/vite-plugin-uni-pages'
 
 export default defineUniPages({
   globalStyle: {
-    navigationStyle: 'default',
-    navigationBarTitleText: 'unibest',
+    navigationStyle: 'custom',
+    navigationBarTitleText: 'e-care-home',
     navigationBarBackgroundColor: '#f8f8f8',
     navigationBarTextStyle: 'black',
     backgroundColor: '#FFFFFF',

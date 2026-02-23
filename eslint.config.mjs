@@ -19,6 +19,8 @@ export default uniHelper({
     'src/manifest.json',
     // 忽略自动生成文件
     'src/service/**',
+    // 忽略 HTML 文件的格式化
+    '*.html',
   ],
   // https://eslint-config.antfu.me/rules
   rules: {
@@ -33,6 +35,7 @@ export default uniHelper({
     'ts/no-empty-object-type': 'off',
     'no-extend-native': 'off',
     'style/brace-style': ['error', '1tbs'],
+    'vue/first-attribute-linebreak': 'off',
     'vue/singleline-html-element-content-newline': [
       'error',
       {
@@ -51,9 +54,9 @@ export default uniHelper({
      */
     css: true,
     /**
-     * Format HTML files
+     * Format HTML files - 禁用以避免格式化冲突
      * By default uses Prettier
      */
-    html: true,
+    html: false,
   },
 })

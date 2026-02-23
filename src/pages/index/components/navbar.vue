@@ -16,6 +16,12 @@ const hasMenuButton = computed(() => {
 function showDrawer() {
   appStore.showDrawer = true
 }
+
+function goToBind() {
+  uni.navigateTo({
+    url: '/pages/bind/index',
+  })
+}
 </script>
 
 <template>
@@ -28,7 +34,7 @@ function showDrawer() {
       康护e家
     </view>
     <view class="navbar-tools flex-row-reverse">
-      <up-icon v-if="!hasMenuButton" name="plus" size="18" />
+      <up-icon v-if="!hasMenuButton" name="plus" size="18" @click="goToBind" />
     </view>
   </view>
 </template>

@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import ChatEditor from './components/chatEditor.vue'
 import Drawer from './components/drawer.vue'
 import Navbar from './components/navbar.vue'
 
@@ -18,8 +19,16 @@ definePage({
 </script>
 
 <template>
-  <view class="index-container">
+  <view class="index-page page">
     <Navbar />
     <Drawer />
+    <ChatEditor />
   </view>
 </template>
+
+<style lang="scss" scoped>
+.index-page {
+  display: flex;
+  flex-direction: column;
+}
+</style>

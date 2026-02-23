@@ -51,7 +51,7 @@
 | --- | --- | ---- | ---------- | ---------- | ---------- | ------------ | ---------- | ---------- |
 | √   | √   | √    | √          | √          | √          | √            | √          | √          |
 
-注意每种 `UI框架` 支持的平台有所不同，详情请看各 `UI框架` 的官网，也可以看 `unibest` 文档。
+注意每种 `UI框架` 支持的平台有所不同，详情请看各 `UI框架` 的官网。
 
 ## ⚙️ 环境
 
@@ -60,7 +60,7 @@
 - Vue Official>=2.1.10
 - TypeScript>=5.0
 
-## 新版分支 
+## 新版分支
 - main == base
 - base --> base-i18n
 - base-login --> base-login-i18n
@@ -83,16 +83,3 @@
 - web平台： `pnpm build:h5`，打包后的文件在 `dist/build/h5`，可以放到web服务器，如nginx运行。如果最终不是放在根目录，可以在 `manifest.config.ts` 文件的 `h5.router.base` 属性进行修改。
 - weixin平台：`pnpm build:mp`, 打包后的文件在 `dist/build/mp-weixin`，然后通过微信开发者工具导入，并点击右上角的“上传”按钮进行上传。
 - APP平台：`pnpm build:app`, 然后打开 `HBuilderX`，导入刚刚生成的`dist/build/app` 文件夹，选择发行 - APP云打包。(如果是 `安卓` 和 `鸿蒙` 平台，则不用这个方式，可以把整个unibest项目导入到hbx，通过hbx的菜单来发行到对应的平台。)
-
-## 📄 License
-
-[MIT](https://opensource.org/license/mit/)
-
-Copyright (c) 2025 菲鸽
-
-## 捐赠
-
-<p align='center'>
-<img alt="special sponsor appwrite" src="https://oss.laf.run/ukw0y1-site/pay/wepay.png" height="330" style="display:inline-block; height:330px;">
-<img alt="special sponsor appwrite" src="https://oss.laf.run/ukw0y1-site/pay/alipay.jpg" height="330" style="display:inline-block; height:330px; margin-left:10px;">
-</p>

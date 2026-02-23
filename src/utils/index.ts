@@ -2,7 +2,6 @@
 import type { PageMetaDatum, SubPackages } from '@uni-helper/vite-plugin-uni-pages'
 /** 如果是运行抖音小程序，就不引入 @uni-helper/uni-env，否则运行报错（找不到process) */
 import { isMpWeixin } from '@uni-helper/uni-env'
-
 import { pages, subPackages } from '@/pages.json'
 
 export type PageInstance = Page.PageInstance<AnyObject, object> & { $page: Page.PageInstance<AnyObject, object> & { fullPath: string } }
@@ -70,6 +69,26 @@ export function parseUrlToObj(url: string) {
   })
   return { path, query }
 }
+
+// 日期格式化
+export function parseTime(date: Date | string | number, pattern = '{y}-{m}-{d} {h}:{i}:{s}') {
+  if (date instanceof Date) {
+    return pattern?.replace(/\{([ymdhisa])\}/g, (_, key) => {
+      return {
+        y: date.getFullYear(),
+        m: (date.getMonth() + 1).toString().padStart(2, '0'),
+        d: date.getDate().toString().padStart(2, '0'),
+        h: date.getHours().toString().padStart(2, '0'),
+        i: date.getMinutes().toString().padStart(2, '0'),
+        s: date.getSeconds().toString().padStart(2, '0'),
+        a: date.getDay(),
+      }[key]
+    })
+  } else if (typeof date === 'string' || typeof date === 'number') {
+    return parseTime(new Date(date), pattern)
+  }
+}
+
 /**
  * 得到所有的需要登录的 pages，包括主包和分包的
  * 这里设计得通用一点，可以传递 key 作为判断依据，默认是 excludeLoginPath, 与 route-block 配对使用

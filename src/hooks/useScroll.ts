@@ -1,5 +1,4 @@
 import type { Ref } from 'vue'
-import { onMounted, ref } from 'vue'
 
 interface UseScrollOptions<T> {
   fetchData: (page: number, pageSize: number) => Promise<T[]>
@@ -39,11 +38,9 @@ export function useScroll<T>({
       }
       list.value.push(...data)
       page.value++
-    }
-    catch (err) {
+    } catch (err) {
       error.value = err
-    }
-    finally {
+    } finally {
       loading.value = false
     }
   }

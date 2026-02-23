@@ -1,5 +1,4 @@
 import type { Ref } from 'vue'
-import { ref } from 'vue'
 
 interface IUseRequestOptions<T> {
   /** 是否立即执行 */
